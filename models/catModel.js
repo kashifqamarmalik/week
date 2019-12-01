@@ -1,33 +1,9 @@
- //'use strict';
-// const cats = [
-//   {
-//     id: '1',
-//     name: 'Frank',
-//     age: '6',
-//     weight: '5',
-//     owner: '1',
-//     filename: 'http://placekitten.com/400/300',
-//   },
-//   {
-//     id: '2',
-//     name: 'James',
-//     age: '4',
-//     weight: '11',
-//     owner: '2',
-//     filename: 'http://placekitten.com/400/302',
-//   },
-// ];
-
-// module.exports = {
-//   cats,
-// };
-
-// ./models/catModel.js
-
 
 'use strict';
 const pool = require('../database/db');
 const promisePool = pool.promise();
+
+
 
 const getAllCats = async () => {
   try {
@@ -39,6 +15,9 @@ const getAllCats = async () => {
   }   
 };
 
+
+
+
 const getCat = async (params) => {
   try{
     const [rows] = await promisePool.execute('SELECT * FROM wop_cat WHERE cat_id = ?;', params);
@@ -46,19 +25,25 @@ const getCat = async (params) => {
   }catch(e){
     console.log('error', e.message);
     return {error: 'error in database query'};
-  }
-}
+  };
+};
 
-  const addCat = async (params) => {
-    try{
-      const [rows] = await promisePool.execute('INSERT INTO  wop_cat (name, age, weight, owner, filename) VALUES (?, ?, ?, ?, ?);', params);
-      //const [rows] = await promisePool.execute('INSERT INTO  wop_user (name, email, password) VALUES (?, ?, ?);', params);
-      return rows;
-    }catch(e){
-      console.log('error', e.message);
-      return {error: 'error in database query'};
-    }
+
+
+
+const addCat = async (params) => {
+  try {
+    const [rows] = await promisePool.execute(
+        'INSERT INTO wop_cat (name, age, weight, owner, filename, coords) VALUES (?, ?, ?, ?, ?, ?);',
+        params);
+    return rows;
   }
+  catch (e) {
+    console.log('error', e.message);
+  }
+};
+
+
 
   const updateCat = async (params) => {
     try{
@@ -71,6 +56,8 @@ const getCat = async (params) => {
       return {error: 'error in database query'};
     }
   }
+
+
 
   const deleteCat = async (params) => {
     try{
