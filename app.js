@@ -7,7 +7,7 @@ const cors = require('cors');
 const catRoute = require('./routes/catRoute');
 const userRoute = require('./routes/userRoute');
 const app = express();
-const port = 3000;
+const port = 3001;
 
 
 
